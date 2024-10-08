@@ -78,4 +78,49 @@ describe('Central de Atendimento ao Cliente', () => {
     cy.get('.success').should('be.visible');
   })
 
+  it('Seleciona um produto por seu texto', () => {
+    cy.get('#product').select('Blog').should('have.value', 'blog');
+  })
+
+  // testes para campos select
+  it('Seleciona um produto pelo seu valor (value)', () => {
+    cy.get('#product')
+    .select('mentoria')
+      .should('have.value', 'mentoria');
+  })
+
+  it('Selecione um produto pelo seu índice', () => {
+    cy.get('#product')
+      .select(2)
+        .should('have.value', 'cursos');
+  })
+
+  // testes para inputs do tipo radio 
+  it('Marca um tipo de atendimento', () =>{
+    cy.get('input[type="radio"][value="elogio"]')
+      .check()
+        .should('have.value', 'elogio');
+  })
+
+
+  // verificando se as opções foram corretamente marcadas.  
+  it('Marca cada tipo de atendimento', () =>{
+    cy.get('input[type="radio"]')
+      .should('have.length', 3)
+        .each(($radio) => {
+          cy.wrap($radio).check()
+          cy.wrap($radio).should('be.checked')
+        })
+  })
+
+  //marcando e desmarcando inputs do tipo checkbox
+  it.only('Marca ambos checkboxes, depois desmarca ambos', () =>{
+    cy.get('input[type="checkbox"]')
+      .check()
+        .last()
+        .uncheck()
+          .should('not.be.checked')
+  })
+
+
 })
